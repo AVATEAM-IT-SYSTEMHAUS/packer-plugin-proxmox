@@ -6,23 +6,16 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  build_linux:
+    defaults:
+      run:
+        working-directory: ~/go/src/github.com/hashicorp/packer-plugin-proxmox
     runs-on: ubuntu-latest
-
+    container:
+      image: docker.mirror.hashicorp.services/cimg/go:1.21
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: .go-version
-
-      - name: Build plugin
-        run: go build -o packer-plugin-proxmox
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: packer-plugin-proxmox
-          path: packer-plugin-proxmox
+    - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+    - uses: "./.github/actions/build-and-persist-plugin-binary"
+      with:
+        GOOS: linux
+        GOARCH: amd64
