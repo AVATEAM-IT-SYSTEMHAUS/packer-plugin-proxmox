@@ -41,13 +41,13 @@ func (s *stepConvertToTemplate) Run(ctx context.Context, state multistep.StateBa
 	}
 
 	ui.Say("Converting VM to template")
-	err = client.CreateTemplate(vmRef)
-	if err != nil {
-		err := fmt.Errorf("Error converting VM to template: %s", err)
-		state.Put("error", err)
-		ui.Error(err.Error())
-		return multistep.ActionHalt
-	}
+	// err = client.CreateTemplate(vmRef)
+	// if err != nil {
+	//	err := fmt.Errorf("Error converting VM to template: %s", err)
+	//	state.Put("error", err)
+	//	ui.Error(err.Error())
+	//	return multistep.ActionHalt
+	//}
 	log.Printf("template_id: %d", vmRef.VmId())
 	state.Put("template_id", vmRef.VmId())
 
