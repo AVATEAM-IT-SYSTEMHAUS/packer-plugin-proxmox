@@ -1,0 +1,31 @@
+name: build-my-fork
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: .go-version
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Build plugin
+        run: go build -o packer-plugin-proxmox
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: packer-plugin-proxmox
+          path: packer-plugin-proxmox
