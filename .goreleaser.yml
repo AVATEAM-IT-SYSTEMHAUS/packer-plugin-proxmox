@@ -7,9 +7,6 @@ env:
   - CGO_ENABLED=0
 before:
   hooks:
-    # We strongly recommend running tests to catch any regression before release.
-    # Even though, this an optional step.
-    - go test ./...
     # Check plugin compatibility with required version of the Packer SDK
     - make plugin-check
     # Copy LICENSE file for inclusion in zip archive
